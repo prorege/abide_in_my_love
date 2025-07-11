@@ -86,7 +86,7 @@ function findTeam() {
 
             if (team) {
                 resultDiv.innerHTML = `
-                    <h2>정결한 그릇, <br>${name}!</h2>
+                    <h2>예수님의 사랑하는 자녀, <br>${name}!</h2>
                     <h3>당신은 ${team.teamNumber}조입니다!</h3>
                     <hr>
                     <br>
@@ -125,7 +125,7 @@ function findTeam() {
 
     if (team) {
         resultDiv.innerHTML = `
-            <h2>정결한 청년, <br>${name}!</h2>
+            <h2>예수님의 사랑하는 자녀, <br>${name}!</h2>
             <h3>당신은 ${team.teamNumber}조입니다!</h3>
             <hr>
             <br>
