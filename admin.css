@@ -1,0 +1,76 @@
+    body {
+      font-family: sans-serif;
+      background-color: #f7f3e9;
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background-color: #a8c686;
+      color: white;
+      font-weight: bold;
+      margin-top: 15px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #8aad5d;
+    }
+
+    .card {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 15px;
+      margin-top: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .card button {
+      width: auto;
+      margin-right: 10px;
+    }
+
+    .section {
+      margin-top: 20px;
+    }
+
+    h2 {
+      margin-bottom: 10px;
+    }
+
+    #goToUserPage {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #a8c686;
+  color: white;
+  padding: 12px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  z-index: 1000;
+  transition: background-color 0.2s;
+}
+
+#goToUserPage:hover {
+  background-color: #8aad5d;
+}

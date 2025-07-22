@@ -1,418 +1,176 @@
-const style = document.createElement('style');
-style.innerHTML = `
-    @font-face {
-        font-family: 'MaruBuri-Bold';
-        src: url('TTF/MaruBuri-Bold.ttf') format('truetype');
-        font-weight: normal;
-        font-style: normal;
-    }
+import { db } from './firebase-config.js';
+import {
+  collection,
+  query,
+  where,
+  getDocs
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-    body {
-        font-family: 'MaruBuri-Bold', sans-serif;
-        margin: 0;
-        padding: 0;
-        background: white;
-        color: var(--dark-blue);
-        animation: fadeIn 1s ease-out;
-    }
-`;
+const nameInput = document.getElementById("nameInput");
+const resultSections = [
+  "teamInfo", "roomInfo", "allTeams", "allRooms",
+  "emergencyInfo", "scheduleInfo", "foodInfo", "resolutionInfo"
+];
 
-document.head.appendChild(style);
-
-
-// JSON 파일 로드
-const teamDataUrl = "team_info.json";
-const roomDataUrl = "room_info.json";
-
-// 데이터를 저장할 변수
-let teamData = [];
-let roomData = [];
-
-// 페이지 로드 시 JSON 데이터 로드
-fetch(teamDataUrl)
-    .then(response => response.json())
-    .then(data => teamData = data.teams)
-    .catch(error => console.error("Unable to load JSON file:", error));
-
-fetch(roomDataUrl)
-    .then(response => response.json())
-    .then(data => roomData = data.rooms)
-    .catch(error => console.error("Unable to load room data:", error));
-
-// 초기화 및 숨기기 함수
-function resetAndHide() {
-    const divs = [
-        document.getElementById("teamInfo"),
-        document.getElementById("emergencyInfo"),
-        document.getElementById("allTeams"),
-        document.getElementById("scheduleInfo"),
-        document.getElementById("roomInfo"),
-        document.getElementById("allRooms"),
-        document.getElementById("resolutionInfo"),
-        document.getElementById("foodInfo"),
-
-    ];
-
-    divs.forEach(div => {
-        div.innerHTML = "";
-        div.style.display = "none";
-    });
+// 모든 결과 숨기기
+function hideAll() {
+  resultSections.forEach(id => {
+    const el = document.getElementById(id);
+    el.style.display = "none";
+    el.innerHTML = "";
+  });
 }
 
+// 참가자 조
+window.findTeam = async function () {
+  hideAll();
+  const name = nameInput.value.trim();
+  if (!name) return alert("이름을 입력해주세요.");
 
-// 나의 조 찾기
-function findTeam() {
-    let name = document.getElementById("nameInput").value.trim();
-    const resultDiv = document.getElementById("teamInfo");
+  const q = query(collection(db, "participants"), where("name", "==", name));
+  const snap = await getDocs(q);
+  const el = document.getElementById("teamInfo");
 
-    // 초기화 및 숨기기
-    resetAndHide();
-// 1번
-    if (!name) {
-        resultDiv.innerHTML = "<p>이름을 먼저 입력하세요 :)</p>";
-        resultDiv.style.display = "block";
-        resultDiv.scrollIntoView({ behavior: 'smooth' });  // 스크롤 이동
-        return;
-    }
+  el.style.display = "block";
 
-    // 동명이인 예외 처리
-    if (name === "이시원") {
-        // 지역 선택을 위한 팝업을 띄움
-        let region = prompt("동명이인이 존재합니다. 지역을 선택해주세요. (구미 또는 서울)");
-
-        if (region === "구미" || region === "서울") {
-            // 해당 지역을 바탕으로 팀 정보 찾기
-            const team = teamData.find(team => team.members.includes(name + `(${region})`) || team.leader === name + `(${region})` || team.subLeader === name + `(${region})`);
-
-            if (team) {
-                resultDiv.innerHTML = `
-                    <h2>예수님의 사랑하는 자녀, <br>${name}!</h2>
-                    <h3>당신은 ${team.teamNumber}조입니다!</h3>
-                    <hr>
-                    <br>
-                    <p><strong>조장</strong></p>
-                    <p> | ${team.leader}</p>
-                    <br>
-                    <p><strong>부조장</strong></p>
-                    <p> - ${team.subLeader}</p>
-                    <br>
-                    <p><strong>조원</strong></p>
-                    <p>- ${team.members.join(", ")}</p>
-                    <br>
-                    <hr>
-                    <br>
-                    <p><strong>조별 장소1 :</strong> ${team.locations[0]}</p>
-                    <p><strong>조별 장소2 :</strong> ${team.locations[1]}</p>
-                    <p><strong>조별 장소3 :</strong> ${team.locations[2]}</p>
-                    <br>
-                `;
-                resultDiv.style.display = "block";
-                resultDiv.scrollIntoView({ behavior: 'smooth' });  // 스크롤 이동
-            } else {
-                resultDiv.innerHTML = `<p>"${name} (${region})"은/는 어떤 팀에도 속하지 않습니다.<br>
-                "만약 등록을 했음에도 검색이 되지 않는다면 
-                <a href="tel:010-7153-3922">010-7153-3922</a>으로 연락해주세요."</p>`;
-                resultDiv.style.display = "block";
-                resultDiv.scrollIntoView({ behavior: 'smooth' });  // 스크롤 이동
-            }
-        } else {
-            alert("올바른 지역을 선택해주세요.");
-        }
-        return;
-    }
-
-    const team = teamData.find(team => team.members.includes(name) || team.leader === name || team.subLeader === name);
-
-    if (team) {
-        resultDiv.innerHTML = `
-            <h2>예수님의 사랑하는 자녀, <br>${name}!</h2>
-            <h3>당신은 ${team.teamNumber}조입니다!</h3>
-            <hr>
-            <br>
-            <p><strong>조장</strong> | ${team.leader}</p>
-            <br>
-            <p><strong>부조장</strong> | ${team.subLeader}</p>
-            <br>
-            <p><strong>조원</strong> | ${team.members.join(", ")}</p>
-            <br>
-        `;
-        resultDiv.style.display = "block";
-        resultDiv.scrollIntoView({ behavior: 'smooth' });  // 스크롤 이동
-    } else {
-        resultDiv.innerHTML = `<p>"${name}"은/는 어떤 팀에도 속하지 않습니다.<br>
-        "만약 등록을 했음에도 검색이 되지 않는다면 
-        <a href="tel:010-7153-3922">010-7153-3922</a>으로 연락해주세요."</p>`;
-        resultDiv.style.display = "block";
-        resultDiv.scrollIntoView({ behavior: 'smooth' });  // 스크롤 이동
-    }
-}
-
-// 이름으로 숙소 찾기
-function findRoom() {
-    let name = document.getElementById("nameInput").value.trim();
-    const resultDiv = document.getElementById("roomInfo");
-
-    // 초기화 및 숨기기
-    resetAndHide();
-
-    if (!name) {
-        resultDiv.innerHTML = "<p>이름을 먼저 입력하세요 :)</p>";
-        resultDiv.style.display = "block";
-        resultDiv.scrollIntoView({ behavior: 'smooth' });  // 스크롤 이동
-        return;
-    }
-
-    const room = roomData.find(room => 
-        room.members.includes(name) || room.leader === name || room.subLeader === name
-    );
-    
-    if (room) {
-        resultDiv.innerHTML = `
-            <h3>${name}님의 숙소 정보</h3>
-            <hr>
-            <h3><strong>숙소 : ${room.location}</strong></h3>
-            <h4><strong>방장 : ${room.leader} </strong></h4>
-            <p>방원 : ${room.members.join(", ")}</p>
-        `;
-        resultDiv.style.display = "block";
-        resultDiv.scrollIntoView({ behavior: 'smooth' });  // 스크롤 이동
-    } else {
-        resultDiv.innerHTML = `<p>"${name}"은/는 숙소에 배정되지 않았습니다.<br>
-        "만약 등록을 했음에도 검색이 되지 않는다면 
-        <strong><a href="tel:010-7153-3922">010-7153-3922</a></strong>으로 연락해주세요."</p>`;
-        resultDiv.style.display = "block";
-        resultDiv.scrollIntoView({ behavior: 'smooth' });  // 스크롤 이동
-    }
-}
-
-
-function showAllTeams() {
-    const resultDiv = document.getElementById("allTeams");
-
-    // 초기화 및 숨기기
-    resetAndHide();
-    resultDiv.innerHTML = '<h2> 조편성 </h2><p>옆으로 밀어서 확인하세요 :)</p>';
-
-    let tableHtml = `
-        <table>
-            <thead>
-                <tr>
-                    <th>조</th>
-                    <th>조장</th>
-                    <th>부조장</th>
-                    <th>조원</th>
-
-                </tr>
-            </thead>
-            <tbody>
+  if (snap.empty) {
+    el.innerHTML = `<p>😢 '${name}' 님을 찾을 수 없습니다.</p>`;
+  } else {
+    const data = snap.docs[0].data();
+    el.innerHTML = `
+      <h3>✅ 조 정보</h3>
+      <p><strong>${data.name}</strong> 님은 <strong>${data.team}조</strong>입니다.</p>
     `;
-    // <th>조별모임장소1</th>
-    // <th>조별모임장소2</th>
-    // <th>조별모임장소3</th>
-    teamData.forEach(team => {
-        tableHtml += `
-            <tr>
-                <td>${team.teamNumber}</td>
-                <td>${team.leader}</td>
-                <td>${team.subLeader}</td>
-                <td>${team.members.join(" ")}</td>
+  }
+  el.scrollIntoView({ behavior: "smooth" });
+};
 
-                
-            </tr>
-        `;
-    });
+// 참가자 숙소
+window.findRoom = async function () {
+  hideAll();
+  const name = nameInput.value.trim();
+  if (!name) return alert("이름을 입력해주세요.");
 
-    // <td>${team.locations[0]}</td>
-    // <td>${team.locations[1]}</td>
-    // <td>${team.locations[2]}</td>
+  const q = query(collection(db, "participants"), where("name", "==", name));
+  const snap = await getDocs(q);
+  const el = document.getElementById("roomInfo");
 
-    tableHtml += "</tbody></table>";
-    resultDiv.innerHTML += tableHtml;
-    resultDiv.style.display = "block";
-    resultDiv.scrollIntoView({ behavior: 'smooth' });  // 스크롤 이동
-}
-function showAllRooms() {
-    const resultDiv = document.getElementById("allRooms");
+  el.style.display = "block";
 
-    // 초기화 및 숨기기
-    resetAndHide();
-    resultDiv.innerHTML = '<h2> 숙소 </h2><p>옆으로 밀어서 확인하세요 :)</p>';
-    
-    // 테이블의 기본 HTML 구조
-    let tableHtml = `
-        <table class="styled-table">
-            <thead>
-                <tr>
-                    <th>Location</th>
-                    <th>방장</th>
-                    <th>방원</th> <!-- 방원 열 추가 -->
-                </tr>
-            </thead>
-            <tbody>
+  if (snap.empty) {
+    el.innerHTML = `<p>😢 '${name}' 님을 찾을 수 없습니다.</p>`;
+  } else {
+    const data = snap.docs[0].data();
+    el.innerHTML = `
+      <h3>🏠 숙소 정보</h3>
+      <p><strong>${data.name}</strong> 님의 숙소는 <strong>${data.room}</strong>입니다.</p>
     `;
+  }
+  el.scrollIntoView({ behavior: "smooth" });
+};
 
-    // 각 Location에 대해 세로로 출력
-    roomData.forEach(room => {
-        tableHtml += "<tr>";
+// 전체 조
+window.showAllTeams = async function () {
+  hideAll();
+  const snap = await getDocs(collection(db, "participants"));
+  const teamMap = new Map();
 
-        // Location을 세로로 추가
-        tableHtml += `<td>${room.location}</td>`;
+  snap.forEach(doc => {
+    const { team, name } = doc.data();
+    if (!teamMap.has(team)) teamMap.set(team, []);
+    teamMap.get(team).push(name);
+  });
 
-        // 방장 추가
-        tableHtml += `<td>${room.leader}</td>`;
+  const el = document.getElementById("allTeams");
+  el.style.display = "block";
 
-        // // 부방장 추가
-        // tableHtml += `<td>${room.subLeader || ""}</td>`; // 부방장이 없으면 빈 문자열 처리
+  const sorted = [...teamMap.entries()].sort((a, b) => a[0] - b[0]);
+  el.innerHTML = `<h3>👥 전체 조 명단</h3>` + 
+    sorted.map(([team, names]) => `<div><strong>${team}조</strong>: ${names.join(", ")}</div>`).join("");
 
-    // 방원 추가 (방원의 수는 방마다 다를 수 있으므로)
-    let membersHtml = room.members.join(" "); // 각 방원의 이름을 공백으로 구분하여 가로로 나열
-    tableHtml += `<td>${membersHtml}</td>`; // 방원들을 가로로 출력
+  el.scrollIntoView({ behavior: "smooth" });
+};
 
-    tableHtml += "</tr>";
+// 전체 숙소
+window.showAllRooms = async function () {
+  hideAll();
+  const snap = await getDocs(collection(db, "participants"));
+  const roomMap = new Map();
 
-    });
+  snap.forEach(doc => {
+    const { room, name } = doc.data();
+    if (!roomMap.has(room)) roomMap.set(room, []);
+    roomMap.get(room).push(name);
+  });
 
-    tableHtml += "</tbody></table>";
-    resultDiv.innerHTML += tableHtml;
-    resultDiv.style.display = "block";
-    resultDiv.scrollIntoView({ behavior: 'smooth' });  // 스크롤 이동
-}
+  const el = document.getElementById("allRooms");
+  el.style.display = "block";
 
+  const sorted = [...roomMap.entries()].sort();
+  el.innerHTML = `<h3>🏠 전체 숙소 배정표</h3>` + 
+    sorted.map(([room, names]) => `<div><strong>${room}</strong>: ${names.join(", ")}</div>`).join("");
 
-// 비상 연락망 표시
-function showEmergency() {
-    const emergencyDiv = document.getElementById("emergencyInfo");
+  el.scrollIntoView({ behavior: "smooth" });
+};
 
-    // 초기화 및 숨기기
-    resetAndHide();
+// 일정
+window.showSchedule = function () {
+  hideAll();
+  const el = document.getElementById("scheduleInfo");
+  el.innerHTML = `
+    <h3>📅 일정표</h3>
+    <ul>
+      <li>7/31(수) 오후: 개회예배 & 저녁집회</li>
+      <li>8/1(목) 오전: 특강 / 오후: 활동 / 저녁: 찬양축제</li>
+      <li>8/2(금) 오전: 폐회예배 및 귀가</li>
+    </ul>
+  `;
+  el.style.display = "block";
+  el.scrollIntoView({ behavior: "smooth" });
+};
 
-    emergencyDiv.innerHTML = `
-        <h2>비상 연락망</h2>
+// 식단
+window.showFood = function () {
+  hideAll();
+  const el = document.getElementById("foodInfo");
+  el.innerHTML = `
+    <h3>🍲 식단표</h3>
+    <ul>
+      <li>7/31 저녁: 불고기, 나물, 김치</li>
+      <li>8/1 아침: 미역국, 계란말이</li>
+      <li>8/1 점심: 제육볶음, 쌈채소</li>
+      <li>8/1 저녁: 치킨, 떡볶이</li>
+      <li>8/2 아침: 된장국, 멸치볶음</li>
+    </ul>
+  `;
+  el.style.display = "block";
+  el.scrollIntoView({ behavior: "smooth" });
+};
 
-        <p><strong>| 보건 스태프 | </strong><br><a href="tel:010-6798-7754">010-8696-5407</a></p>
-        <p><strong>| 안전(보안) 스태프 | </strong><br> <a href="tel:010-9979-3096">010-9979-3096 이찬희 회장</a>
-        <br>
-        <a href="tel:010-7153-3922">010-7153-3922 양세혁 총무
-        </p>
-    `;
-    emergencyDiv.style.display = "block";
-    emergencyDiv.scrollIntoView({ behavior: 'smooth' });  // 스크롤 이동
+// 응급 연락망
+window.showEmergency = function () {
+  hideAll();
+  const el = document.getElementById("emergencyInfo");
+  el.innerHTML = `
+    <h3>📞 응급 연락망</h3>
+    <ul>
+      <li>총괄: 박00 목사 010-xxxx-xxxx</li>
+      <li>의료: 김00 권사 010-xxxx-xxxx</li>
+      <li>안전: 이00 집사 010-xxxx-xxxx</li>
+    </ul>
+  `;
+  el.style.display = "block";
+  el.scrollIntoView({ behavior: "smooth" });
+};
 
-}
-
-// Schedule 정보 표시
-function showSchedule() {
-    const scheduleDiv = document.getElementById("scheduleInfo");
-
-    // 초기화 및 숨기기
-    resetAndHide();
-
-    scheduleDiv.innerHTML = `
-        <h2>Schedule</h2>
-        <img src="img/schedule.png" alt="Schedule" style="max-width: 100%; height: auto;">
-    `;
-    scheduleDiv.style.display = "block";
-    scheduleDiv.scrollIntoView({ behavior: 'smooth' });  // 스크롤 이동
-}
-
-function showResolution() {
-    const resolutionDiv = document.getElementById("resolutionInfo");
-    resetAndHide();
-
-    resolutionDiv.innerHTML = `
-        <h2><a href="https://forms.gle/Po5nWcFgWxESzVeYA">결단문 바로가기</a></h2>
-    `;
-    resolutionDiv.style.display = "block";
-    resolutionDiv.scrollIntoView({ behavior: 'smooth' });  // 스크롤 이동
-}
-function showFood() {
-    const resultDiv = document.getElementById("foodInfo");
-
-    // 초기화 및 숨기기
-    resetAndHide();
-    
-    // 초기화 후에 h2, p 태그 추가
-    resultDiv.innerHTML = ` 
-        <h2>Menu</h2>
-        <p>...</p>
-    `;
-
-    // 식단표 데이터 로드
-    fetch("menuData.json") // JSON 파일에서 데이터 로드
-        .then(response => response.json())
-        .then(menuData => {
-            let tableHtml = `
-                <table class="styled-table">
-                    <thead>
-                        <tr>
-                            <th>날짜</th>
-                            <th>시간</th>
-                            <th>메뉴1</th>
-                            <th>메뉴2</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
-
-            menuData.forEach(menu => {
-                // 메뉴가 2개로 구분되어 있으면 메뉴1과 메뉴2를 각각 다른 셀에 출력
-                if (menu.menu.length > 1 && menu.menu.some(item => item.startsWith("메뉴"))) {
-                    const menu1 = menu.menu.find(item => item.startsWith("메뉴1:")) || "";
-                    const menu2 = menu.menu.find(item => item.startsWith("메뉴2:")) || "";
-
-                    tableHtml += `
-                        <tr>
-                            <td>${menu.date}</td>
-                            <td>${menu.time}</td>
-                            <td>${menu1.replace("메뉴1:", "").trim()}</td>
-                            <td>${menu2.replace("메뉴2:", "").trim()}</td>
-                        </tr>
-                    `;
-                } else {
-                    // 메뉴가 1개일 경우 하나의 셀에 모두 출력
-                    const menuItems = menu.menu.join(", ");
-                    tableHtml += `
-                        <tr>
-                            <td>${menu.date}</td>
-                            <td>${menu.time}</td>
-                            <td colspan="2">${menuItems}</td>
-                        </tr>
-                    `;
-                }
-            });
-
-            tableHtml += "</tbody></table>";
-            resultDiv.innerHTML += tableHtml; // 기존 내용 뒤에 메뉴 테이블을 추가
-            
-            resultDiv.style.display = "block";
-            resultDiv.scrollIntoView({ behavior: "smooth" }); // 스크롤 이동
-        })
-        .catch(error => {
-            console.error("식단표 데이터를 불러오는 중 오류 발생:", error);
-            resultDiv.innerHTML = "<p>식단표를 불러올 수 없습니다. 나중에 다시 시도해주세요.</p>";
-            resultDiv.style.display = "block";
-        });
-}
-
-function createSnowflake() {
-    const snowflake = document.createElement("div");
-    snowflake.classList.add("snowflake");
-    snowflake.innerHTML = "❄";  // 눈 모양
-    document.body.appendChild(snowflake);
-
-    const startLeft = Math.random() * window.innerWidth;
-    const duration = Math.random() * 1 + 5; // 2~5초 랜덤 속도
-    const size = Math.random() * 0 + 5; // 5~15px 크기
-
-    snowflake.style.left = `${startLeft}px`;
-    snowflake.style.fontSize = `${size}px`;
-    snowflake.style.animationDuration = `${duration}s`;
-
-    // 일정 시간 후 제거
-    setTimeout(() => {
-        snowflake.remove();
-    }, duration * 1000);
-}
-
-// 눈이 계속 내리게 설정
-setInterval(createSnowflake, 200);
+// 결단문
+window.showResolution = function () {
+  hideAll();
+  const el = document.getElementById("resolutionInfo");
+  el.innerHTML = `
+    <h3>✍️ 결단문</h3>
+    <p>나는 하나님 앞에서 서로 사랑하라는 말씀에 순종하며, 이번 수련회 기간 동안 <strong>말과 행동, 사랑</strong>으로 주님을 증거하겠습니다.</p>
+  `;
+  el.style.display = "block";
+  el.scrollIntoView({ behavior: "smooth" });
+};
