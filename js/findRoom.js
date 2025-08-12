@@ -129,7 +129,7 @@ async function renderRoomInfo(selectedName, el) {
     el.innerHTML = `
       <h2 class="card-title">🏠 숙소 정보</h2>
       <p><strong class="emp">${escapeHTML(userData["이름"])}</strong> 님의 숙소는 <br>
-      <strong class="emp">${escapeHTML(room)}</strong>입니다.</p>
+      <strong class="emp">${escapeHTML(room)}</strong><br>입니다.</p>
 
       <h4>🏘 같은 숙소 참가자 (${roommates.length}명)</h4>
       <ul>

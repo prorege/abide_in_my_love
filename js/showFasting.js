@@ -39,7 +39,7 @@ export async function showFasting() {
     } else {
       const label = labels[fasting] || "미지정";
       el.innerHTML = `<p><strong>${user["이름"]}</strong> 님은 금식기도<br>
-      <strong class="emp">${label}</strong> 입니다. 🙏</p>`;
+      <strong class="emp">${label}</strong><br> 입니다. 🙏</p>`;
     }
 
     el.scrollIntoView({ behavior: "smooth" });

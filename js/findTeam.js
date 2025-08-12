@@ -112,7 +112,7 @@ async function renderTeamInfo(selectedName, el) {
 
     el.innerHTML = `
       <h2 class="card-title">✅ 조 정보</h2>
-      <p><strong class="emp">${userData["이름"]}</strong> 님은 <strong class="emp">${teamNumber}조</strong>입니다.</p>
+      <p><strong class="emp">${userData["이름"]}</strong> 님은 <strong class="emp">${teamNumber}조</strong><br>입니다.</p>
 
       <h4>👑 조장</h4>
       <ul>

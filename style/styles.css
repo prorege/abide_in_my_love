@@ -413,49 +413,49 @@ footer a:hover { text-decoration: underline; }
   transform: scale(1.05);
 }
 html.day-mode {
-  --color-bg-main: #e7f0fd;
-  --color-bg-secondary: #d6e6f5;
-  --color-bg-deep: #b8d4f0;
-  --color-bg-card: #ffffff;
-  --color-bg-hover: #f4f8fb;
-  --color-bg-breakfast: #fffcd7;
-  --color-bg-lunch: #eaffd0;
-  --color-bg-dinner: #c4ddfa;
-  
-  --color-footer: #c7dff7;
-  --color-button: #f4a6b8;
-  --color-button-hover: #e7899e;
-  --color-text-main: #2f3a4c;
-  --color-text-muted: #7b8a9a;
-  --color-text-strong: #e86a7f;
-  --color-link: #4b8dde;
-  --color-border-light: #d0dae5;
-  --color-border-card: #c0cfe0;
-  --color-border-table: #b7c7db;
-  --color-table-header: #dbe8f7;
+  --color-bg-main: #9ab2a0;       /* 바탕: 연한 청록 */
+  --color-bg-secondary: #a8c2b2;  /* 부드러운 해변톤 */
+  --color-bg-deep: #86a795;       /* 좀 더 깊은 청록 */
+  --color-bg-card: #ffffff;       /* 카드: 흰색 */
+  --color-bg-hover: #d7e5dd;      /* 호버: 연한 청록+회색 */
+  --color-bg-breakfast: #fff6c8;  /* 아침: 노랑 */
+  --color-bg-lunch: #e1f7d4;      /* 점심: 연한 초록 */
+  --color-bg-dinner: #b5d9d0;     /* 저녁: 청록빛 */
+
+  --color-footer: #bcd1c5;
+  --color-button: #8fd3c1;        /* 버튼: 연한 민트 */
+  --color-button-hover: #7fc4b1;
+  --color-text-main: #2f3a34;     /* 본문: 진한 회녹색 */
+  --color-text-muted: #72827a;    /* 흐린 회녹색 */
+  --color-text-strong: #4bb89f;   /* 강조: 민트 */
+  --color-link: #4b8d8b;          /* 링크: 짙은 민트 */
+  --color-border-light: #c1d5cc;
+  --color-border-card: #a9c3b7;
+  --color-border-table: #9cb5aa;
+  --color-table-header: #d4e3db;
 }
 
 html.night-mode {
-  --color-bg-main: #121212;
-  --color-bg-secondary: #1e1e2f;
-  --color-bg-deep: #181828;
-  --color-bg-card: #222233;
-  --color-bg-hover: #2e2e3e;
-  --color-bg-breakfast: #979152;
-  --color-bg-lunch: #44582b;
-  --color-bg-dinner: #202c3b;
+  --color-bg-main: #305278;       /* 바탕: 어두운 바다색 */
+  --color-bg-secondary: #26425f;  /* 좀 더 짙은 남색 */
+  --color-bg-deep: #1b2e44;       /* 깊은 밤바다색 */
+  --color-bg-card: #2c3e52;       /* 카드: 살짝 밝은 남색 */
+  --color-bg-hover: #3a5678;      /* 호버: 약간 더 밝은 톤 */
+  --color-bg-breakfast: #7a6b50;  /* 따뜻한 조식톤 */
+  --color-bg-lunch: #4e7055;      /* 녹색끼 있는 낮 */
+  --color-bg-dinner: #1f2f44;     /* 저녁 어두운 남색 */
 
-  --color-footer: #1c1c2b;
-  --color-button: #e86a7f;
-  --color-button-hover: #d35b6e;
-  --color-text-main: #f0f0f0;
-  --color-text-muted: #b0b0b0;
-  --color-text-strong: #f78fa7;
-  --color-link: #6fa7ff;
-  --color-border-light: #3c3c4f;
-  --color-border-card: #4a4a5f;
-  --color-border-table: #3d3d50;
-  --color-table-header: #2f2f44;
+  --color-footer: #1d2d40;
+  --color-button: #f28aa5;        /* 버튼: 분홍 톤 유지 */
+  --color-button-hover: #e06c8e;
+  --color-text-main: #f0f4f8;     /* 본문: 밝은 회백 */
+  --color-text-muted: #9fb3c9;    /* 흐린 텍스트 */
+  --color-text-strong: #ff97af;   /* 강조: 핑크 */
+  --color-link: #8cb8ff;          /* 링크: 밝은 하늘색 */
+  --color-border-light: #4a6a8a;
+  --color-border-card: #3b5673;
+  --color-border-table: #2f4762;
+  --color-table-header: #3a5670;
 }
 
 #editRequestBtn, #scrollTopBtn{
