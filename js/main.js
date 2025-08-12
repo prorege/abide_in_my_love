@@ -1,3 +1,4 @@
+// js/main.js
 import { findTeam } from './findTeam.js';
 import { findRoom } from './findRoom.js';
 import { showAllTeams } from './showAllTeams.js';
@@ -6,12 +7,32 @@ import { showSchedule } from './showSchedule.js';
 import { showFood } from './showFood.js';
 import { showEmergency } from './showEmergency.js';
 import { showResolution } from './showResolution.js';
+import { showFasting } from './showFasting.js';
+import { showAllFasting } from './showAllFasting.js';
+import { typingText } from './typingText.js';
+import { loadCSV } from './utils/loadCSV.js';
+import { showLinktree } from './showLinktree.js';
 
-window.findTeam = findTeam;
-window.findRoom = findRoom;
-window.showAllTeams = showAllTeams;
-window.showAllRooms = showAllRooms;
-window.showSchedule = showSchedule;
-window.showFood = showFood;
-window.showEmergency = showEmergency;
-window.showResolution = showResolution;
+export const appHandlers = {
+  findTeam,
+  findRoom,
+  showAllTeams,
+  showAllRooms,
+  showSchedule,
+  showFood,
+  showEmergency,
+  showResolution,
+  showFasting,
+  showAllFasting,
+  typingText,
+  showLinktree
+};
+
+// 전역 핸들러 등록
+window.appHandlers = appHandlers;
+
+// 초기 로딩 시 CSV 데이터 미리 불러오기
+window.addEventListener('DOMContentLoaded', async () => {
+  await loadCSV(); // ✅ 참가자 CSV 미리 로드 & 캐싱
+  typingText();
+});

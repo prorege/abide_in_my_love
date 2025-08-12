@@ -1,0 +1,138 @@
+/* 🔲 모달 전체 영역 (오버레이) */
+.modal,
+#editModal {
+  display: none;
+  position: fixed;
+  z-index: 3000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6); /* 반투명 배경 */
+  overflow: auto;
+  transition: opacity 0.3s ease;
+}
+
+/* 활성화 시 애니메이션 */
+.modal.show .modal-content,
+#editModal.show .modal-content {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* 🖼 모달 내용 박스 */
+.modal-content,
+#editModal .modal-content {
+  position: relative;
+  background: var(--color-bg-card, #fff);
+  margin: 15% auto; /* ✅ 상단 여유 확보 (기존 8~10% → 15%) */
+  padding: 20px;
+  border-radius: 12px;
+  width: 80%;
+  max-width: 400px; /* 팝업 폭 제한 */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+  opacity: 0;
+  transform: translateY(-30px) scale(0.9);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  text-align: center;
+}
+
+/* 제목 스타일 */
+.modal-content h2 {
+  margin-top: 0;
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--color-text-main, #333);
+}
+
+/* 닫기 버튼 (X) */
+.close-btn,
+#closeModal {
+  position: absolute;
+  top: 12px;
+  right: 15px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #666;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.close-btn:hover,
+#closeModal:hover {
+  color: #000;
+}
+
+/* textarea */
+#editContent {
+  width:90%;
+  min-height: 80px;
+  max-height: 150px;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  resize: vertical;
+  outline: none;
+  margin-top: 10px;
+  transition: border 0.2s;
+}
+#editContent:focus {
+  border-color: #007bff;
+}
+
+/* 예시 문구 */
+.example-text {
+  font-size: 13px;
+  color: #777;
+  margin: 8px 0 15px;
+  background: #f8f9fa;
+  padding: 8px 10px;
+  border-radius: 6px;
+  line-height: 1.4;
+}
+
+/* 제출 버튼 */
+#submitEditBtn {
+  width: 90%;
+  padding: 10px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.2s ease;
+}
+#submitEditBtn:hover {
+  background: #0056b3;
+}
+
+/* 메시지 출력 */
+#editMsg {
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+/* 플로팅 버튼 최상단 유지 */
+.top-right-btn {
+  z-index: 4000;
+}
+
+/* 모바일 대응 */
+@media (max-width: 600px) {
+  .modal-content,
+  #editModal .modal-content {
+    margin: 25% auto; /* 모바일은 여유 더 확보 */
+    width: 90%;
+    padding: 18px;
+  }
+  .close-btn,
+  #closeModal {
+    font-size: 22px;
+    top: 8px;
+    right: 10px;
+  }
+}

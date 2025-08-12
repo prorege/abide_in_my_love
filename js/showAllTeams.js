@@ -1,44 +1,65 @@
-import { db } from '../firebase-config.js';
-import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+// js/showAllTeams.js
 import { hideAll } from './utils.js';
+import { loadCSV } from './utils/loadCSV.js';
 
 export async function showAllTeams() {
   hideAll();
-  const snap = await getDocs(collection(db, "participants"));
+
+  const data = await loadCSV();
+  console.log("🔥 CSV 데이터:", data);
+
+  if (!data || data.length === 0) {
+    console.error("❌ CSV 데이터가 비어있습니다.");
+    document.getElementById("allTeams").innerHTML = "<p>⚠️ 참가자 데이터가 없습니다.</p>";
+    return;
+  }
+
   const teamMap = new Map();
 
-  snap.forEach(doc => {
-    const { team, name, member } = doc.data(); // member = "팀장" 또는 "팀원"
+  // CSV 컬럼명에 맞춰 데이터 분류
+  data.forEach((row) => {
+    const team = (row["조번호"] || "").toString().trim();
+    const name = (row["이름"] || "").trim();
+    const member = (row["팀장팀원"] || "").trim();
+
+    // ✅ 숫자가 아닌 조번호는 제외
+    if (!team || isNaN(Number(team)) || !name || !member || team.includes("-")) return;
+
     if (!teamMap.has(team)) teamMap.set(team, []);
-    teamMap.get(team).push({ name, member });
+    teamMap.get(team).push({ 이름: name, 역할: member });
   });
 
   const el = document.getElementById("allTeams");
   el.style.display = "block";
 
-  const sorted = [...teamMap.entries()].sort((a, b) => Number(a[0]) - Number(b[0]));
-  const rows = sorted.map(([team, people]) => {
-    const leader = people.find(p => p.member === "팀장");
-    const members = people
-      .filter(p => p.member !== "팀장")
-      .map(p => p.name)
-      .join(", ");
+  // 조 번호 기준 정렬
+  const sorted = [...teamMap.entries()].sort(([a], [b]) => Number(a) - Number(b));
 
-    return `
-      <tr>
-        <td><strong>${team}조</strong></td>
-        <td>${leader ? leader.name : "없음"}</td>
-        <td>${members}</td>
-      </tr>
-    `;
-  }).join("");
+  const rows = sorted
+    .map(([team, people]) => {
+      const leader = people.find((p) => p.역할 === "조장");
+      const members = people
+        .filter((p) => p.역할 !== "조장")
+        .map((p) => p.이름)
+        .sort((a, b) => a.localeCompare(b, "ko"))
+        .join(" ");
+
+      return `
+        <tr>
+          <td><strong>${team}</strong></td>
+          <td>${leader ? leader.이름 : "<span style='color:red;'>없음</span>"}</td>
+          <td>${members}</td>
+        </tr>
+      `;
+    })
+    .join("");
 
   el.innerHTML = `
-    <h3>👥 전체 조 명단</h3>
+    <h2>👥 전체 조 명단</h2>
     <table class="result-table">
       <thead>
         <tr>
-          <th>조 번호</th>
+          <th>조</th>
           <th>조장</th>
           <th>조원</th>
         </tr>

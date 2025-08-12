@@ -1,6 +1,7 @@
 export const resultSections = [
   "teamInfo", "roomInfo", "allTeams", "allRooms",
-  "emergencyInfo", "scheduleInfo", "foodInfo", "resolutionInfo"
+  "emergencyInfo", "scheduleInfo", "foodInfo", "resolutionInfo",
+  "fastingInfo", "allFastingInfo", "allLinktreeInfo"
 ];
 
 export function hideAll() {
