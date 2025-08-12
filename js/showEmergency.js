@@ -6,16 +6,13 @@ export function showEmergency() {
   el.innerHTML = `
     <h2>📞 응급 연락망</h2>
     <ul>
-      <li>기획팀장 - 이정길 장로 - <a href="tel:01085713096" class="call-link">전화걸기</a></li>
+      <li>구미 청년 회장 - 이찬희 형제 - <a href="tel:01099793096" class="call-link">전화걸기</a></li>
       <br>
-      <li>기획총무 - 노동훈 집사 - <a href="tel:01098334516" class="call-link">전화걸기</a></li>
-    </ul>
-    <hr>
-    <h2>🚐 운전자</h2>
-    <ul>
-      <li>이건우 집사 - <a href="tel:01090934230" class="call-link">전화걸기</a></li>
+      <li>구미 대학 회장 - 신승민 형제 - <a href="tel:01080342717" class="call-link">전화걸기</a></li>
       <br>
-      <li>이찬희 형제 - <a href="tel:01099793096" class="call-link">전화걸기</a></li>
+      <li>구미 청년 총무 - 윤여상 형제 - <a href="tel:01040944057" class="call-link">전화걸기</a></li>
+      <br>
+      <li>구미 대학 총무 - 김민서 형제 - <a href="tel:01044740899" class="call-link">전화걸기</a></li>
     </ul>
   `;
   el.style.display = "block";
