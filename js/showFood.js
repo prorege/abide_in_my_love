@@ -6,50 +6,49 @@ export function showFood() {
 
   const foodData = {
     day1: {
-      date: "7월 31일 (목)",
-      breakfast: [
-        ""
-      ],
-      lunch: [
-        "백미밥", "닭정육 야채볶음", "튀김만두", "알미트볼 조림",
-        "새송이버섯볶음", "오이&부추 무침", "김치", "멸치볶음", "미역냉국"
-      ],
-      dinner: [
-        "백미밥", "소불고기 덮밥", "용가리치킨", "도라지미역무침",
-        "김치", "신선 야채 사라다", "두부구이", "오이냉국", "계절과일"
-      ]
+      date: "8월 14일 (목)",
+      breakfast: {
+        menu: [""],
+        wash: "1조"
+      },
+      lunch: {
+        menu: [""],
+        wash: "2조"
+      },
+      dinner: {
+        menu: ["닭갈비", "콩나물 국", "양파, 오이무침", "김치", "단무지", "요구르트(헤헤 맛있겠다)"],
+        wash: "3조"
+      }
     },
     day2: {
-      date: "8월 1일 (금)",
-      breakfast: [
-        "백미밥","콩나물국","공중너비아니", "호박참치볶음", "비엔나 어묵볼 조림",
-        "우엉 조림", "김치", "야쿠르트", "콘 샐러드", "모닝 베이커리", "딸기잼"
-      ],
-      lunch: [
-        "삼계탕", "녹두찹쌀죽", "깍두기", "풋고추, 쌈장", 
-        "양파지", "바나나"
-      ],
-      dinner: [
-        "백미밥", "제육볶음", "양배추 쌈", "멸치볶음", 
-        "오이무침", "배추김치", "낙지젓갈", "숙주무침", 
-        "건새우 마늘쫑 볶음", "계절과일"
-      ]
+      date: "8월 15일 (금)",
+      breakfast: {
+        menu: ["자율"],
+        wash: "4조"
+      },
+      lunch: {
+        menu: ["햄김치볶음밥", "계란후라이(헤헤헤)", "유부어묵탕", "단무지", "사과"],
+        wash: "5조"
+      },
+      dinner: {
+        menu: ["콩불고기", "된장국", "귤"],
+        wash: "6조"
+      }
     },
     day3: {
-      date: "8월 2일 (토)",
-      breakfast: [
-        "백미밥", "생선까스(타르타르소스)", "오이피클", "신선야채사라다",
-        "조미김", "배추김치", "드링크 야쿠르트", "단배추 된장국",
-        "계절과일", "모닝 베이커리", "버터포션"
-      ],
-      lunch: [
-        "비빔밥 (고사리, 취나물, 콩나물, 당근나물, 호박나물, 도라지)",
-        "미역부각", "소고기볶음 고추장", "계란지단", 
-        "김치, 겉절이", "계절과일", "미역냉국"
-      ],
-      dinner: [
-        "내년에 만나요~"
-      ]
+      date: "8월 16일 (토)",
+      breakfast: {
+        menu: ["자율"],
+        wash: "7조"
+      },
+      lunch: {
+        menu: ["돈까스", "냉모밀(와사비)", "단무지", "양배추샐러드", "판젤리"],
+        wash: "8조"
+      },
+      dinner: {
+        menu: ["내년에 만나요~"],
+        wash: "전체"
+      }
     }
   };
 
@@ -74,11 +73,25 @@ export function showFood() {
         <div class="schedule-card">
           <h4>${meals.date}</h4>
           <table class="food-table">
-            <thead><tr><th>식사</th><th>메뉴</th></tr></thead>
+            <thead>
+              <tr><th>식사</th><th>메뉴</th><th>설거지</th></tr>
+            </thead>
             <tbody>
-              <tr class="breakfast"><td><strong>아침</strong></td><td>${meals.breakfast.join('<br>')}</td></tr>
-              <tr class="lunch"><td><strong>점심</strong></td><td>${meals.lunch.join('<br>')}</td></tr>
-              <tr class="dinner"><td><strong>저녁</strong></td><td>${meals.dinner.join('<br>')}</td></tr>
+              <tr class="breakfast">
+                <td><strong>아침</strong></td>
+                <td>${meals.breakfast.menu.join('<br>')}</td>
+                <td>${meals.breakfast.wash}</td>
+              </tr>
+              <tr class="lunch">
+                <td><strong>점심</strong></td>
+                <td>${meals.lunch.menu.join('<br>')}</td>
+                <td>${meals.lunch.wash}</td>
+              </tr>
+              <tr class="dinner">
+                <td><strong>저녁</strong></td>
+                <td>${meals.dinner.menu.join('<br>')}</td>
+                <td>${meals.dinner.wash}</td>
+              </tr>
             </tbody>
           </table>
         </div>
