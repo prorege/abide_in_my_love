@@ -1,6 +1,6 @@
 const textElement = document.getElementById('typing-text');
-// const text = `2025 안디옥교회\n대학청년 연합 수련회\n[나의 사랑 안에 거하라]`;
-const text = `작업중`;
+const text = `2025 안디옥교회\n대학청년 연합 수련회\n[나의 사랑 안에 거하라]`;
+// const text = `작업중`;
 let index = 0;
 let isDeleting = false;
 let delay = 200;

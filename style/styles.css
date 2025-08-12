@@ -267,7 +267,7 @@ footer a:hover { text-decoration: underline; }
   padding: 10px;
   font-size: 16px;
   background: var(--color-bg-hover);
-  color: var(--color-button-hover);
+  color: var(--color-button-hover_); 
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -425,6 +425,7 @@ html.day-mode {
   --color-footer: #bcd1c5;
   --color-button: #8fd3c1;        /* 버튼: 연한 민트 */
   --color-button-hover: #7fc4b1;
+  --color-button-hover_ : #203b34;
   --color-text-main: #2f3a34;     /* 본문: 진한 회녹색 */
   --color-text-muted: #72827a;    /* 흐린 회녹색 */
   --color-text-strong: #4bb89f;   /* 강조: 민트 */
