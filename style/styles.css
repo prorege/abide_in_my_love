@@ -92,7 +92,7 @@ h3 { color: var(--color-text-muted); }
 #typing-text {
   white-space: pre-line;
   display: inline-block;
-  color: var(--color-bg-main-op);
+  color: var(--color-bg-main-op);6
   min-height: 4.5em;
   line-height: 1.5em;
   min-width: 10em;
