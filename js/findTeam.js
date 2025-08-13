@@ -133,32 +133,32 @@ async function renderTeamInfo(selectedName, el) {
   }
 
   // 현재 시간 및 이미지 표시
-  const now = new Date();
-  const formattedTime = now.toLocaleString("ko-KR", { hour12: false });
+  // const now = new Date();
+  // const formattedTime = now.toLocaleString("ko-KR", { hour12: false });
 
-  const today = now.getMonth() + 1;
-  const day = now.getDate();
-  let seatImage = "";
+  // const today = now.getMonth() + 1;
+  // const day = now.getDate();
+  // let seatImage = "";
 
-  if (today === 7 && day <= 31) {
-    seatImage = "../img/seat01.png";
-  } else if (today >= 8 || (today === 7 && day > 31)) {
-    seatImage = "../img/seat02.png";
-  }
+  // if (today === 7 && day <= 31) {
+  //   seatImage = "../img/seat01.png";
+  // } else if (today >= 8 || (today === 7 && day > 31)) {
+  //   seatImage = "../img/seat02.png";
+  // }
 
-  el.innerHTML += `
-    <hr>
-    <h3 class="emp">팀별 좌석 배치도</h3>
-    ${
-      seatImage
-        ? `<div style="margin-top:15px; text-align:center;">
-            <img src="${seatImage}" alt="좌석 배치도" style="max-width:100%; border-radius:8px; cursor: zoom-in;" onclick="openImagePopup('${seatImage}')">
-          </div>`
-        : ""
-    }
-    <p style="margin-top:10px; font-size:0.9rem; color:grey;">⏰ 조회 시각: ${formattedTime}</p>
+  // el.innerHTML += `
+  //   <hr>
+  //   <h3 class="emp">팀별 좌석 배치도</h3>
+  //   ${
+  //     seatImage
+  //       ? `<div style="margin-top:15px; text-align:center;">
+  //           <img src="${seatImage}" alt="좌석 배치도" style="max-width:100%; border-radius:8px; cursor: zoom-in;" onclick="openImagePopup('${seatImage}')">
+  //         </div>`
+  //       : ""
+  //   }
+  //   <p style="margin-top:10px; font-size:0.9rem; color:grey;">⏰ 조회 시각: ${formattedTime}</p>
         
-  `;
+  // `;
 
   el.scrollIntoView({ behavior: "smooth" });
 }
