@@ -12,6 +12,7 @@ import { showAllFasting } from './showAllFasting.js';
 import { typingText } from './typingText.js';
 import { loadCSV } from './utils/loadCSV.js';
 import { showLinktree } from './showLinktree.js';
+import { showWashClean } from './showWashClean.js';
 
 export const appHandlers = {
   findTeam,
@@ -25,7 +26,8 @@ export const appHandlers = {
   showFasting,
   showAllFasting,
   typingText,
-  showLinktree
+  showLinktree,
+  showWashClean
 };
 
 // 전역 핸들러 등록
