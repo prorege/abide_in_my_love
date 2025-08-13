@@ -45,10 +45,10 @@ export function showWashClean() {
       .wc-filter button {
         padding: 8px 14px; border-radius: 12px;
         border: 1px solid var(--color-border-light, #e5e7eb);
-        background: var(--color-bg-hover, #f7f7f7);
+        background: var(--color-bg-hover, #bd2c2cff);
         cursor:pointer; font-size: 14px;
       }
-      .wc-filter button.active { background: #eef6ff; border-color:#bfdbfe; }
+      .wc-filter button.active { background: #536e64ff; border-color:#bfdbfe; }
 
       .wc-grid { width:100%; border-collapse: collapse; }
       .wc-grid th, .wc-grid td { padding: 10px 12px; border-bottom: 1px solid var(--color-border-light, #e5e7eb); text-align:left; vertical-align: middle; }
