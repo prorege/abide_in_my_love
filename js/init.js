@@ -1,11 +1,11 @@
-import { showAllTeams } from './showAllTeams.js';
+import { typingText } from './typingText.js';
 
-window.addEventListener("DOMContentLoaded", async () => {
+window.addEventListener("load", async () => {
   const loadingEl = document.getElementById("loading");
   const appEl = document.getElementById("app");
 
   try {
-    await showAllTeams();  // 전체 조 명단을 기본으로 보여줌
+    await typingText();  // 전체 조 명단을 기본으로 보여줌
   } catch (err) {
     console.error("초기 데이터 로딩 오류:", err);
     loadingEl.innerHTML = `<p>❌ 로딩 중 오류가 발생했습니다.</p>`;
