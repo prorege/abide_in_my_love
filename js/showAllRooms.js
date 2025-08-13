@@ -35,7 +35,6 @@ export async function showAllRooms() {
         <button class="room-toggle" data-index="${idx}">🏠 ${room}</button>
         <div class="room-table" id="room-${idx}" style="display: none;">
           <table class="result-table">
-            <thead><tr><th>숙소 이용 명단</th></tr></thead>
             <tbody>
               <tr>
                 <td class="names-cell">
