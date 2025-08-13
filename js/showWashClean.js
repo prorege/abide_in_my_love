@@ -199,4 +199,6 @@ export function showWashClean() {
       renderAssignmentTable(btn.dataset.mode);
     });
   });
+    el.scrollIntoView({ behavior: "smooth" });
+
 }
