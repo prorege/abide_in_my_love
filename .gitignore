@@ -1,3 +1,7 @@
 node_modules
 node_modules
 "booklet.pdf" 
+
+# Local Netlify folder
+.netlify
+booklet.pdf
