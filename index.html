@@ -81,19 +81,11 @@
       <button id="grd8" class="grid-item" onclick="appHandlers.showResolution()">결단문 ✍️</button>
       <button id="grd9" class="grid-item" onclick="appHandlers.showWashClean()">청소&설거지 🧽</button>
       <!-- 책자 PDF 다운로드 버튼 -->
-      <button id="grd10" class="grid-item" onclick="downloadBooklet()">책자 PDF 다운받기 📄</button>
-      <script>
-        function downloadBooklet() {
-          // 최초 1회만 확인: localStorage 사용
-          const KEY = 'booklet_confirmed';
-          if (!localStorage.getItem(KEY)) {
-            if (!confirm("📄 정말 다운로드 하시겠습니까?")) return;
-            localStorage.setItem(KEY, '1');
-          }
-          window.location.href = '/booklet.pdf'; // Netlify에 올라간 정적 파일 경로
-        }
-      </script>
-
+      <button id="grd10" class="grid-item">
+        <a style="color: rgb(78, 59, 36);" href="https://drive.google.com/drive/folders/1H4UGzQP2060NrtabXhek86aSSfLtLC8e?usp=sharing" download>
+          책자 PDF 다운받기 📄
+        </a>
+      </button>
 
 
       <!-- <button id="grd11" class="grid-item" onclick="appHandlers.showLinktree()">안디옥 소셜 네트워크 ✍️</button> -->
