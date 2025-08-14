@@ -81,11 +81,8 @@
       <button id="grd8" class="grid-item" onclick="appHandlers.showResolution()">결단문 ✍️</button>
       <button id="grd9" class="grid-item" onclick="appHandlers.showWashClean()">청소&설거지 🧽</button>
       <!-- 책자 PDF 다운로드 버튼 -->
-      <button id="grd12" class="grid-item">
-        <a style="color: rgb(78, 59, 36);" href="booklet.pdf" download>
-          책자 PDF 다운받기 📄
-        </a>
-      </button>
+      <button id="grd10" class="grid-item" onclick="downloadBooklet()">책자 PDF 다운받기 📄</button>
+
 
 
       <!-- <button id="grd11" class="grid-item" onclick="appHandlers.showLinktree()">안디옥 소셜 네트워크 ✍️</button> -->
@@ -174,4 +171,12 @@
       msg.style.color = "red";
     }
   };
+</script>
+<script>
+  function downloadBooklet() {
+    if (confirm("📄 정말 다운로드 하시겠습니까?")) {
+      // PDF 경로로 이동하여 다운로드 실행
+      window.location.href = 'booklet.pdf';
+    }
+  }
 </script>
